@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Admin{% endblock %}
+{% block layout %}
+<div class="admin-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="{% url 'admin_dashboard' %}">
+      <img src="{% static 'img/tesda-logo.png' %}" alt="TESDA logo">
+      <strong>TESDA</strong><span>Lucena City</span>
+    </a>
+    <nav aria-label="Admin">
+      <a href="{% url 'admin_dashboard' %}" class="{% if active == 'dashboard' %}active{% endif %}"><i class="bi bi-house-door"></i> Dashboard</a>
+      <a href="{% url 'manage_courses' %}" class="{% if active == 'courses' %}active{% endif %}"><i class="bi bi-book"></i> Course Management</a>
+      <a href="{% url 'manage_batches' %}" class="{% if active == 'batches' %}active{% endif %}"><i class="bi bi-calendar3"></i> Batch Availability</a>
+      <a href="{% url 'manage_centers' %}" class="{% if active == 'centers' %}active{% endif %}"><i class="bi bi-bank"></i> Training Centers</a>
+      <a href="{% url 'manage_enrollments' %}" class="{% if active == 'enrollments' %}active{% endif %}"><i class="bi bi-person-lines-fill"></i> Enrollment Records</a>
+      <a href="{% url 'manage_users' %}" class="{% if active == 'users' %}active{% endif %}"><i class="bi bi-people"></i> Users</a>
+      <a href="{% url 'manage_reports' %}" class="{% if active == 'reports' %}active{% endif %}"><i class="bi bi-bar-chart-line"></i> Reports</a>
+      <a href="{% url 'manage_announcements' %}" class="{% if active == 'notifications' %}active{% endif %}"><i class="bi bi-bell"></i> Notifications</a>
+      <a href="{% url 'manage_settings' %}" class="{% if active == 'settings' %}active{% endif %}"><i class="bi bi-gear"></i> Settings</a>
+    </nav>
+    <form method="post" action="{% url 'logout' %}" data-exit>{% csrf_token %}
+      <button class="side-link" type="submit"><i class="bi bi-box-arrow-left"></i> Logout</button>
+    </form>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-top">
+      <button class="nav-toggle" type="button" data-toggle-sidebar aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+      <form class="admin-search" method="get" action="{{ search_action }}" role="search">
+        <i class="bi bi-search" aria-hidden="true"></i>
+        <input type="search" name="q" value="{{ q|default:'' }}" placeholder="Search..." aria-label="Search">
+      </form>
+      <a class="bell" href="{% url 'manage_announcements' %}" aria-label="Notifications"><i class="bi bi-bell"></i></a>
+      <details class="user-menu">
+        <summary><i class="bi bi-person-circle" style="font-size:1.5rem"></i> Admin <i class="bi bi-chevron-down"></i></summary>
+        <div class="menu-pop">
+          <a href="{% url 'manage_settings' %}"><i class="bi bi-gear"></i> Settings</a>
+          <form method="post" action="{% url 'logout' %}" data-exit>{% csrf_token %}
+            <button type="submit"><i class="bi bi-box-arrow-right"></i> Log out</button>
+          </form>
+        </div>
+      </details>
+    </header>
+    <main class="admin-content">{% block admin_content %}{% endblock %}</main>
+  </div>
+</div>
+{% endblock %}

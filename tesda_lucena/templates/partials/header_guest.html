@@ -1,0 +1,23 @@
+{% load static %}{% with page=request.resolver_match.url_name %}
+<header class="site-header">
+  <a class="brand" href="{% url 'home' %}">
+    <img src="{% static 'img/tesda-logo.png' %}" alt="TESDA logo">
+    <span><strong>TESDA Lucena</strong><small>Batch Availability System</small></span>
+  </a>
+  <button class="nav-toggle" type="button" data-toggle-nav aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+  <nav class="site-nav" aria-label="Main">
+    <a href="{% url 'home' %}" class="{% if page == 'home' %}active{% endif %}">Home</a>
+    <a href="{% url 'courses' %}" class="{% if page == 'courses' %}active{% endif %}">Courses</a>
+    <a href="{% url 'training_centers' %}" class="{% if page == 'training_centers' %}active{% endif %}">Training Centers</a>
+    <a href="{% url 'about' %}" class="{% if page == 'about' %}active{% endif %}">About</a>
+  </nav>
+  <form class="nav-search" action="{% url 'courses' %}" method="get" role="search">
+    <i class="bi bi-search" aria-hidden="true"></i>
+    <input type="search" name="q" placeholder="Search..." aria-label="Search courses">
+  </form>
+  <div class="nav-auth">
+    <a class="btn btn-outline btn-sm" href="{% url 'login' %}">Log in</a>
+    <a class="btn btn-primary btn-sm" href="{% url 'register' %}">Sign up</a>
+  </div>
+</header>
+{% endwith %}

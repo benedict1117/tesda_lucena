@@ -1,0 +1,16 @@
+<article class="card batch-card">
+  <div>
+    <h3>{{ b.course.full_name }} <span class="chip chip-{{ b.status }}">{{ b.get_status_display }}</span></h3>
+    <ul>
+      <li><i class="bi bi-tag-fill"></i>Batch {{ b.batch_no }}</li>
+      <li><i class="bi bi-calendar3"></i>{{ b.schedule_label }}</li>
+      <li><i class="bi bi-geo-alt"></i>{{ b.center.name }}</li>
+      <li><i class="bi bi-people"></i>{{ b.slots_left }} of {{ b.slots }} slots left</li>
+    </ul>
+  </div>
+  <form method="post" action="{% url 'enroll' b.pk %}" data-confirm data-confirm-title="Confirm Action"
+        data-confirm-message="Do you want to enroll in {{ b.course.name }} (batch {{ b.batch_no }})?">
+    {% csrf_token %}
+    <button class="btn btn-primary" type="submit" {% if not b.is_open %}disabled{% endif %}>{% if b.is_open %}Enroll{% else %}Unavailable{% endif %}</button>
+  </form>
+</article>

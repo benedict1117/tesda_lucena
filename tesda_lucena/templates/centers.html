@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Training Centers{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-title">
+    <h1>Training Centers in Lucena</h1>
+    <p class="muted">Find a TESDA center near you.</p>
+  </div>
+  <div class="grid-3" style="grid-template-columns: 1fr;">
+    {% for c in centers %}
+    <article class="card center-card">
+      <div>
+        <h3>{{ c.name }}</h3>
+        <p class="muted"><i class="bi bi-geo-alt"></i> {{ c.address }}</p>
+        {% if c.contact %}<p class="muted"><i class="bi bi-telephone"></i> {{ c.contact }}</p>{% endif %}
+        {% if c.programs_offered %}<p><strong>Programs:</strong> {{ c.programs_offered }}</p>{% endif %}
+        <a class="btn btn-primary btn-sm" href="{% url 'batches' %}?center={{ c.pk }}">View courses</a>
+      </div>
+      {% if c.map_bbox %}
+      <iframe class="map-frame" loading="lazy" title="Map of {{ c.name }}"
+        src="https://www.openstreetmap.org/export/embed.html?bbox={{ c.map_bbox|urlencode }}&amp;layer=mapnik&amp;marker={{ c.latitude }}%2C{{ c.longitude }}"></iframe>
+      {% else %}<div class="map-frame"></div>{% endif %}
+    </article>
+    {% empty %}
+    <p class="empty">No training centers listed yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

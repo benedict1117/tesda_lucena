@@ -1,0 +1,10 @@
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="pager" aria-label="Pagination">
+  {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}{% if q %}&amp;q={{ q|urlencode }}{% endif %}" aria-label="Previous">«</a>{% else %}<span class="off">«</span>{% endif %}
+  {% for n in page_obj.paginator.page_range %}
+    {% if n == page_obj.number %}<span class="current" aria-current="page">{{ n }}</span>
+    {% else %}<a href="?page={{ n }}{% if q %}&amp;q={{ q|urlencode }}{% endif %}">{{ n }}</a>{% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}{% if q %}&amp;q={{ q|urlencode }}{% endif %}" aria-label="Next">»</a>{% else %}<span class="off">»</span>{% endif %}
+</nav>
+{% endif %}

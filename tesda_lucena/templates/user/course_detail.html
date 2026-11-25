@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{ course.name }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-title">
+    <h1>{{ course.full_name }}</h1>
+    <p class="muted">{{ course.category }} · {{ course.duration_hours }} training hours</p>
+    {% if course.description %}<p>{{ course.description }}</p>{% endif %}
+    <button type="button" class="btn btn-soft btn-sm" data-course
+      data-course-name="{{ course.name }}" data-course-nc="{{ course.nc_level }}"
+      data-course-provider="{{ course.provider }}" data-course-hours="{{ course.duration_hours }}"><i class="bi bi-book"></i> Course information</button>
+  </div>
+  <h2>Available batches</h2>
+  <div class="stack" style="margin-top:.8rem">
+    {% for b in batches %}{% include 'user/_batch_card.html' %}{% empty %}
+    <p class="empty">No batches are scheduled for this course yet.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

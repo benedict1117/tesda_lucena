@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Log in{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+<section class="auth-split">
+  <div class="auth-hero" style="--hero: url('{% static 'img/login-hero.jpg' %}')">
+    <p class="hero-tag">Sa TESDA, Kayang Kaya!</p>
+  </div>
+  <div class="auth-panel">
+    <h2 class="org">Technical Education and Skills Development Authority</h2>
+    <img class="org-logo" src="{% static 'img/tesda-logo.png' %}" alt="TESDA logo">
+    <p class="lead">Log in to TESDA</p>
+    <form method="post" class="stack" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {% if form.non_field_errors %}<div class="form-error" role="alert">{{ form.non_field_errors.0 }}</div>{% endif %}
+      {{ form.username }}
+      <div class="input-icon">
+        {{ form.password }}
+        <button type="button" data-toggle-password aria-label="Show password"><i class="bi bi-eye"></i></button>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Log in</button>
+    </form>
+    <p class="muted" style="margin:1rem 0 .6rem">Forgot your password? Please contact your TESDA office.</p>
+    <a class="btn btn-soft btn-block" style="border:1.5px solid #5a5a78" href="{% url 'register' %}{% if next %}?next={{ next|urlencode }}{% endif %}">Register</a>
+  </div>
+</section>
+{% endblock %}

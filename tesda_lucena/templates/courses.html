@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Courses{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-title">
+    <h1>Courses</h1>
+    <p class="muted">Browse TESDA qualifications offered in Lucena City.</p>
+  </div>
+  <form class="filters" method="get">
+    <input class="input" type="search" name="q" value="{{ q }}" placeholder="Search courses" aria-label="Search courses">
+    <select class="input select" name="category" aria-label="Category" onchange="this.form.submit()">
+      <option value="">All categories</option>
+      {% for cat in categories %}<option value="{{ cat }}" {% if cat == category %}selected{% endif %}>{{ cat }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <div class="grid-3">
+    {% for c in courses %}
+    <article class="card course-card">
+      <div class="cat">{{ c.category }}</div>
+      <h3>{{ c.name }}</h3>
+      <div class="meta"><span class="chip chip-nc">{{ c.nc_level }}</span><span>{{ c.duration_hours }} hrs</span></div>
+      <a class="btn btn-primary btn-sm" href="{% url 'course_detail' c.pk %}">View batches</a>
+    </article>
+    {% empty %}
+    <p class="empty">No courses match your search.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

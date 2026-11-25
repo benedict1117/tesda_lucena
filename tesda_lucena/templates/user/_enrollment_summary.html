@@ -1,0 +1,16 @@
+<div class="enroll-row">
+  <div class="enroll-img"><i class="bi bi-tools"></i></div>
+  <div>
+    <h3>{{ enrollment.batch.course.name }}</h3>
+    <div class="kv">
+      <span><i class="bi bi-tag-fill"></i> Batch: {{ enrollment.batch.batch_no }}</span>
+      <span><i class="bi bi-calendar3"></i> Schedule: {{ enrollment.batch.schedule_label }}</span>
+      <span><i class="bi bi-geo-alt"></i> Training Center: {{ enrollment.batch.center.name }}</span>
+    </div>
+    {% if enrollment.status == 'enrolled' %}
+      <span class="status-pill"><i class="bi bi-check-circle-fill"></i> Enrollment Confirmed</span>
+    {% else %}
+      <span class="status-pill pending"><i class="bi bi-hourglass-split"></i> Awaiting Confirmation</span>
+    {% endif %}
+  </div>
+</div>

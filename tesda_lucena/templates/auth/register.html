@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <h2 class="org">Technical Education and Skills Development Authority</h2>
+  <img class="org-logo" src="{% static 'img/tesda-logo.png' %}" alt="TESDA logo">
+  <form method="post" class="stack" style="text-align:left" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <div class="row-2">
+      <div>{{ form.first_name }}{{ form.first_name.errors }}</div>
+      <div>{{ form.last_name }}{{ form.last_name.errors }}</div>
+    </div>
+    <div>{{ form.identifier }}{{ form.identifier.errors }}</div>
+    <div>
+      <div class="input-icon">{{ form.password1 }}
+        <button type="button" data-toggle-password aria-label="Show password"><i class="bi bi-eye"></i></button></div>
+      {{ form.password1.errors }}
+    </div>
+    <div>
+      <div class="input-icon">{{ form.password2 }}
+        <button type="button" data-toggle-password aria-label="Show password"><i class="bi bi-eye"></i></button></div>
+      {{ form.password2.errors }}
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Register</button>
+  </form>
+  <p class="muted" style="margin-top:1rem">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+</section>
+{% endblock %}

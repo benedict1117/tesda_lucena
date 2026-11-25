@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-head" style="margin-top:2rem">
+    <div><h1>Notifications</h1></div>
+    {% if unread_count %}
+    <form method="post" action="{% url 'notifications_read' %}">{% csrf_token %}<button class="btn btn-soft btn-sm" type="submit"><i class="bi bi-check2-all"></i> Mark all as read</button></form>
+    {% endif %}
+  </div>
+  <section class="panel">
+    {% for n in page_obj %}{% include 'user/_notification.html' %}{% empty %}<p class="empty">No notifications yet.</p>{% endfor %}
+  </section>
+  {% include 'partials/pager.html' %}
+</div>
+{% endblock %}

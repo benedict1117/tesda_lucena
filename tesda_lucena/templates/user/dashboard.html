@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block body_attrs %}{% if notify_count %} data-notify-count="{{ notify_count }}" data-notify-url="{% url 'notifications' %}"{% endif %}{% endblock %}
+{% block content %}
+<div class="container">
+  <section class="banner">
+    <span class="avatar"><i class="bi bi-person-fill"></i></span>
+    <div><h1>Welcome back, {{ user.display_name }}!</h1><p>Here's an update on your enrollment.</p></div>
+  </section>
+
+  <div class="dash-grid">
+    <section class="panel">
+      <div class="panel-head"><h2><i class="bi bi-clipboard-check-fill"></i> My Enrollment</h2><a href="{% url 'my_enrollment' %}">View Details <i class="bi bi-arrow-right"></i></a></div>
+      {% if enrollment %}
+        {% include 'user/_enrollment_summary.html' %}
+      {% else %}
+        <p class="empty">You are not enrolled in a course yet.<br><a class="btn btn-primary btn-sm" style="margin-top:.8rem" href="{% url 'courses' %}">Browse courses</a></p>
+      {% endif %}
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2><i class="bi bi-bell-fill"></i> Notifications</h2><a href="{% url 'notifications' %}">View All <i class="bi bi-arrow-right"></i></a></div>
+      {% for n in notifications %}{% include 'user/_notification.html' %}{% empty %}<p class="empty">No notifications yet.</p>{% endfor %}
+    </section>
+  </div>
+
+  <div class="dash-grid">
+    <section class="panel">
+      <div class="panel-head"><h2><i class="bi bi-megaphone-fill"></i> Latest Announcements</h2><a href="{% url 'announcements' %}">View All <i class="bi bi-arrow-right"></i></a></div>
+      {% if announcement %}
+      <div class="announce">
+        <div class="thumb"><img src="{% static 'img/tesda-logo.png' %}" alt=""></div>
+        <div>
+          <strong>{{ announcement.title }}</strong>
+          <p class="muted" style="margin:.2rem 0">{{ announcement.body }}</p>
+          <small class="muted"><i class="bi bi-calendar3"></i> {{ announcement.created_at|date:"M d, Y" }}</small>
+        </div>
+      </div>
+      {% else %}<p class="empty">No announcements yet.</p>{% endif %}
+    </section>
+
+    <section class="assist">
+      <h2>Need Assistance?</h2>
+      <p>Contact our support team for any concerns regarding your enrollment.</p>
+      <button class="btn btn-primary" type="button" data-info="For inquiries, contact the nearest TESDA office or email {{ site.contact_email }}."><i class="bi bi-envelope-fill"></i> Contact Support</button>
+    </section>
+  </div>
+</div>
+{% endblock %}

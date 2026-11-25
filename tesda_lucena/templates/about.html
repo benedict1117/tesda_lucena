@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}About{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-title">
+    <h1>About the system</h1>
+    <p class="muted">The TESDA Lucena Batch Availability System helps trainees see open training batches and enroll online.</p>
+  </div>
+  <div class="dash-grid">
+    <section class="faq">
+      <h2>Frequently asked questions</h2>
+      <details><summary>Who can enroll?</summary><p class="muted">Anyone who creates an account and meets the course requirements.</p></details>
+      <details><summary>How do I know my enrollment is confirmed?</summary><p class="muted">You will receive a notification and your dashboard will show "Enrollment Confirmed".</p></details>
+      <details><summary>Can I withdraw from a course?</summary><p class="muted">Yes. Open My Enrollment and choose Withdraw. You can then join another batch.</p></details>
+      <details><summary>What should I bring on the first day?</summary><p class="muted">A valid ID and your enrollment form.</p></details>
+    </section>
+    <aside class="panel assist">
+      <h2>Ready to enroll?</h2>
+      <p>Log in or create an account to see available batches.</p>
+      <a class="btn btn-primary" href="{% url 'batches' %}">Check batch availability</a>
+    </aside>
+  </div>
+</div>
+{% endblock %}

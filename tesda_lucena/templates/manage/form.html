@@ -1,0 +1,21 @@
+{% extends 'manage/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block admin_content %}
+<div class="page-head"><div><h1>{{ title }}</h1></div></div>
+<form method="post" class="form-card stack" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="form-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+  {% for field in form %}
+  <div class="field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+    {{ field.errors }}
+  </div>
+  {% endfor %}
+  <div class="actions">
+    <button class="btn btn-primary" type="submit"><i class="bi bi-save"></i> Save</button>
+    <a class="btn btn-soft" href="{{ back_url }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

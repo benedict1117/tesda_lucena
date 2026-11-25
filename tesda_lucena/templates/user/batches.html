@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Batch Availability{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-title"><h1>Batch availability</h1><p class="muted">Open and upcoming training batches.</p></div>
+  <form class="filters" method="get">
+    <input class="input" type="search" name="q" value="{{ q }}" placeholder="Search course or batch no." aria-label="Search">
+    <select class="input select" name="center" aria-label="Training center" onchange="this.form.submit()">
+      <option value="">All training centers</option>
+      {% for c in centers %}<option value="{{ c.pk }}" {% if center == c.pk|stringformat:'s' %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-primary" type="submit">Filter</button>
+  </form>
+  <div class="stack">
+    {% for b in batches %}{% include 'user/_batch_card.html' %}{% empty %}<p class="empty">No batches found.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

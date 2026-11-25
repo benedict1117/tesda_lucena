@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="tagline">Sa TESDA, Kayang Kaya!</p>
+      <h1>Find your TESDA training batch in Lucena City</h1>
+      <p class="muted">See which courses are open, how many slots are left and where the training happens, then enroll online.</p>
+      <div class="actions">
+        {# Every button below leads to a login-protected page: guests land on the login page first. #}
+        <a class="btn btn-primary btn-lg" href="{% url 'batches' %}">Check batch availability</a>
+        <a class="btn btn-outline btn-lg" href="{% url 'courses' %}">Browse courses</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <img src="{% static 'img/tesda-logo.png' %}" alt="">
+      <h2>Technical Education and Skills Development Authority</h2>
+      <p>Lucena City</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container">
+  <h2>How it works</h2>
+  <p class="sub">Four simple steps from browsing to your first day of training.</p>
+  <div class="grid-4">
+    <div class="step"><div class="num">1</div><h3>Create an account</h3><p class="muted">Sign up with your email or mobile number.</p></div>
+    <div class="step"><div class="num">2</div><h3>Choose a course</h3><p class="muted">Browse NC I – NC IV qualifications.</p></div>
+    <div class="step"><div class="num">3</div><h3>Pick a batch</h3><p class="muted">Compare schedules, centers and open slots.</p></div>
+    <div class="step"><div class="num">4</div><h3>Get confirmed</h3><p class="muted">Track your status and notifications.</p></div>
+  </div>
+</section>
+
+<section class="section container">
+  <h2>Featured courses</h2>
+  <p class="sub">A few of the qualifications currently offered.</p>
+  <div class="grid-3">
+    {% for c in featured %}
+    <article class="card course-card">
+      <div class="cat">{{ c.category }}</div>
+      <h3>{{ c.name }}</h3>
+      <div class="meta"><span>{{ c.nc_level }}</span><span>{{ c.duration_hours }} hrs</span></div>
+      <a class="btn btn-primary btn-sm" href="{% url 'course_detail' c.pk %}">View batches</a>
+    </article>
+    {% empty %}
+    <p class="empty">Courses will appear here once they are added.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

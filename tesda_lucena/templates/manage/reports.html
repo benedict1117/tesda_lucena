@@ -1,0 +1,15 @@
+{% extends 'manage/base.html' %}
+{% block title %}Reports{% endblock %}
+{% block admin_content %}
+<div class="page-head"><div><h1>Reports</h1><p>Generate and view system reports (downloads as CSV, opens in Excel)</p></div></div>
+<div class="report-grid">
+  {% for slug, title, desc, icon in reports %}
+  <div class="report">
+    <i class="bi {{ icon }}"></i>
+    <h3>{{ title }}</h3>
+    <p>{{ desc }}</p>
+    <a class="btn btn-primary btn-sm" href="{% url 'manage_report' slug %}">Generate Report</a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

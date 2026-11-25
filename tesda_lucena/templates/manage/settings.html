@@ -1,0 +1,43 @@
+{% extends 'manage/base.html' %}
+{% load static %}
+{% block title %}Settings{% endblock %}
+{% block admin_content %}
+<div class="page-head"><div><h1>Settings</h1><p>Configure system settings</p></div></div>
+<div class="settings-grid">
+  <nav class="tabs" aria-label="Settings sections">
+    <a href="?tab=general" class="{% if tab == 'general' %}active{% endif %}">General Settings</a>
+    <a href="?tab=notifications" class="{% if tab == 'notifications' %}active{% endif %}">Notification Settings</a>
+    <a href="{% url 'manage_users' %}">User Management</a>
+    <a href="?tab=backup" class="{% if tab == 'backup' %}active{% endif %}">System Backup</a>
+  </nav>
+
+  <section class="form-card" style="max-width:none">
+    {% if form %}
+    <h2>{% if tab == 'notifications' %}Notification Settings{% else %}General Settings{% endif %}</h2>
+    <form method="post" class="stack" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="field">
+        {% if field.field.widget.input_type == 'checkbox' %}
+          <label style="display:flex;gap:.6rem;align-items:center">{{ field }} {{ field.label }}</label>
+        {% else %}
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+        {% endif %}
+        {{ field.errors }}
+      </div>
+      {% endfor %}
+      <div><button class="btn btn-primary" type="submit"><i class="bi bi-save"></i> Save Changes</button></div>
+    </form>
+    {% else %}
+    <h2>System Backup</h2>
+    <p class="muted">Download a JSON copy of all courses, centers, batches, enrollments, notifications and accounts. Store it somewhere safe: it contains personal data.</p>
+    <a class="btn btn-primary" href="{% url 'manage_backup' %}"><i class="bi bi-download"></i> Download backup</a>
+    {% endif %}
+  </section>
+
+  <aside class="logo-card">
+    <img src="{% static 'img/tesda-logo.png' %}" alt="TESDA logo">
+    <strong>TESDA</strong><span>Lucena City</span>
+  </aside>
+</div>
+{% endblock %}

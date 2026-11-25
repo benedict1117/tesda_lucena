@@ -1,0 +1,5 @@
+<div class="notif {% if not n.is_read %}unread{% endif %}">
+  <span class="ico"><i class="bi {{ n.icon }}"></i></span>
+  <div><strong>{{ n.title }}</strong><p>{{ n.message }}</p></div>
+  <time datetime="{{ n.created_at|date:'c' }}">{{ n.created_at|timesince }} ago</time>
+</div>

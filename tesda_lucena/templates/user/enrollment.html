@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}My Enrollment{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-title"><h1>My Enrollment</h1></div>
+  <section class="panel">
+    {% if enrollment %}
+      {% include 'user/_enrollment_summary.html' %}
+      <div class="actions">
+        <button type="button" class="btn btn-soft" data-course
+          data-course-name="{{ enrollment.batch.course.name }}"
+          data-course-nc="{{ enrollment.batch.course.nc_level }}"
+          data-course-provider="{{ enrollment.batch.course.provider }}"
+          data-course-hours="{{ enrollment.batch.course.duration_hours }}"><i class="bi bi-book"></i> Course information</button>
+        <form method="post" action="{% url 'withdraw' %}" data-confirm data-confirm-title="Confirm Action"
+              data-confirm-message="Are you sure you want to withdraw from this course?">
+          {% csrf_token %}<button class="btn btn-outline" type="submit">Withdraw</button>
+        </form>
+      </div>
+    {% else %}
+      <p class="empty">You have no active enrollment.<br><a class="btn btn-primary btn-sm" style="margin-top:.8rem" href="{% url 'courses' %}">Browse courses</a></p>
+    {% endif %}
+  </section>
+
+  {% if history %}
+  <h2 style="margin-top:2rem">History</h2>
+  <div class="table-wrap"><table class="data">
+    <thead><tr><th>Course</th><th>Batch</th><th>Center</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>{% for e in history %}
+      <tr><td>{{ e.batch.course.full_name }}</td><td>{{ e.batch.batch_no }}</td><td>{{ e.batch.center.name }}</td>
+          <td>{{ e.enrolled_on|date:"M d, Y" }}</td><td><span class="chip chip-{{ e.status }}">{{ e.get_status_display }}</span></td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% endif %}
+</div>
+{% endblock %}

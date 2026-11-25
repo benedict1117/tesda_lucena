@@ -1,0 +1,31 @@
+{% load static %}{% with page=request.resolver_match.url_name %}
+<header class="site-header">
+  <a class="brand" href="{% url 'dashboard' %}">
+    <img src="{% static 'img/tesda-logo.png' %}" alt="TESDA logo">
+    <span><strong>TESDA Lucena</strong><small>Batch Availability System</small></span>
+  </a>
+  <button class="nav-toggle" type="button" data-toggle-nav aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+  <nav class="site-nav" aria-label="Main">
+    <a href="{% url 'dashboard' %}" class="{% if page == 'dashboard' %}active{% endif %}">Home</a>
+    <a href="{% url 'courses' %}" class="{% if page == 'courses' or page == 'course_detail' %}active{% endif %}">Courses</a>
+    {# Logged-in rule: this link redirects to the Courses page #}
+    <a href="{% url 'training_centers' %}">Training Centers</a>
+    <a href="{% url 'about' %}" class="{% if page == 'about' %}active{% endif %}">About</a>
+  </nav>
+  <div class="nav-tools">
+    <a class="bell" href="{% url 'notifications' %}" aria-label="Notifications">
+      <i class="bi bi-bell-fill"></i>{% if unread_count %}<span class="count">{{ unread_count }}</span>{% endif %}
+    </a>
+    <details class="user-menu">
+      <summary><span class="avatar"><i class="bi bi-person-fill"></i></span><span class="sr-only">Account menu</span></summary>
+      <div class="menu-pop">
+        <a href="{% url 'my_enrollment' %}"><i class="bi bi-clipboard-check"></i> My Enrollment</a>
+        <a href="{% url 'notifications' %}"><i class="bi bi-bell"></i> Notifications</a>
+        <form method="post" action="{% url 'logout' %}" data-exit>{% csrf_token %}
+          <button type="submit"><i class="bi bi-box-arrow-right"></i> Log out</button>
+        </form>
+      </div>
+    </details>
+  </div>
+</header>
+{% endwith %}

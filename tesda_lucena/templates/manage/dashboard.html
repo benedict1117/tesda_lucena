@@ -1,0 +1,26 @@
+{% extends 'manage/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block admin_content %}
+<div class="page-head"><div><h1>Dashboard</h1><p>Overview of TESDA Lucena training activity</p></div></div>
+
+<div class="stat-grid">
+  {% for label, value, icon in stats %}
+  <div class="stat"><i class="bi {{ icon }}"></i><div><strong>{{ value }}</strong><span>{{ label }}</span></div></div>
+  {% endfor %}
+</div>
+
+<h2>Recent enrollments</h2>
+<div class="table-wrap" style="margin-top:.6rem">
+  <table class="data">
+    <thead><tr><th>Student</th><th>Course</th><th>Training Center</th><th>Batch</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for e in recent %}
+      <tr><td>{{ e.user.full_display_name }}</td><td>{{ e.batch.course.name }}</td><td>{{ e.batch.center.name }}</td>
+          <td>{{ e.batch.batch_no }}</td><td>{{ e.enrolled_on|date:"M d, Y" }}</td>
+          <td><span class="chip chip-{{ e.status }}">{{ e.get_status_display }}</span></td></tr>
+    {% empty %}<tr><td colspan="6" class="empty">No enrollments yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+<p style="margin-top:1rem"><a class="btn btn-primary btn-sm" href="{% url 'manage_enrollments' %}">View all enrollment records</a></p>
+{% endblock %}
